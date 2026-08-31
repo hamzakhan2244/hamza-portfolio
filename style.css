@@ -2930,3 +2930,136 @@ footer {
   }
 
 }
+/* =========================================================
+   HERO CODE TYPING
+========================================================= */
+
+.hero-typing-character {
+  opacity: 0;
+  display: inline;
+}
+
+.hero-typing-character.typed {
+  opacity: 1;
+}
+
+
+/* =========================================================
+   FLOATING HERO CARDS
+========================================================= */
+
+.floating-card.card-one {
+  animation: heroFloatOne 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+
+.floating-card.card-two {
+  animation: heroFloatTwo 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+
+.floating-badge {
+  animation: heroFloatBadge 4.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+
+/* =========================================================
+   CLEAN CODE FLOAT
+========================================================= */
+
+@keyframes heroFloatOne {
+
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   ALWAYS LEARNING FLOAT
+========================================================= */
+
+@keyframes heroFloatTwo {
+
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   PORTFOLIO BADGE FLOAT
+========================================================= */
+
+@keyframes heroFloatBadge {
+
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .floating-card.card-one {
+    animation-duration: 4.5s;
+  }
+
+  .floating-card.card-two {
+    animation-duration: 5.5s;
+  }
+
+  .floating-badge {
+    animation-duration: 5s;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .floating-card.card-one,
+  .floating-card.card-two,
+  .floating-badge {
+    animation: none;
+  }
+
+}
