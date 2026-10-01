@@ -4237,3 +4237,75 @@ body {
   }
 
 }
+
+/* ===== HERO FLOATING CARDS — MOBILE ===== */
+
+@media (max-width: 720px) {
+
+  .hero-visual {
+    position: relative !important;
+  }
+
+  .floating-card,
+  .floating-badge {
+    display: flex !important;
+    position: absolute !important;
+    z-index: 20 !important;
+  }
+
+  .floating-card {
+    flex-direction: column !important;
+  }
+
+  .card-one {
+    left: -8px !important;
+    bottom: 25px !important;
+  }
+
+  .card-two {
+    right: -8px !important;
+    top: 35px !important;
+  }
+
+  .floating-badge {
+    right: 15px !important;
+    bottom: 15px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-visual {
+    overflow: visible !important;
+  }
+}
+
+/* ===== MOBILE FLOATING CARDS POSITION FIX ===== */
+
+@media (max-width: 720px) {
+
+  .hero-visual {
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  /* Clean Code */
+  .hero-visual .card-one {
+    left: -12px !important;
+    bottom: -25px !important;
+    z-index: 5 !important;
+  }
+
+  /* Always Learning */
+  .hero-visual .card-two {
+    right: -10px !important;
+    top: 25px !important;
+    z-index: 5 !important;
+  }
+
+  /* Portfolio badge */
+  .hero-visual .floating-badge {
+    right: 10px !important;
+    bottom: -30px !important;
+    z-index: 6 !important;
+  }
+}
