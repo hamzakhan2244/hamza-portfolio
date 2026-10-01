@@ -3752,24 +3752,30 @@ body {
 }
 
 /* =========================================================
-   FULL MOBILE RESPONSIVE
+   FULL MOBILE RESPONSIVE — FIXED
 ========================================================= */
+
 
 /* ---------- TABLET ---------- */
 
 @media (max-width: 900px) {
 
-  .container {
-    width: min(100% - 40px, var(--max));
-  }
+  /* =========================
+     NAVBAR
+  ========================= */
 
-  /* Navbar */
+  .navbar {
+    padding: 18px 24px;
+  }
 
   nav {
     padding: 18px 0;
   }
 
-  /* Hero */
+
+  /* =========================
+     HERO
+  ========================= */
 
   .hero {
     grid-template-columns: 1fr;
@@ -3778,34 +3784,44 @@ body {
     padding-top: 70px;
   }
 
-  .hero-content {
-    align-items: center;
+  .hero-copy {
+    width: 100%;
   }
 
   .hero h1 {
     font-size: clamp(42px, 7vw, 64px);
   }
 
-  .hero p {
+  .hero-text {
     max-width: 650px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* Hero buttons */
-
   .hero-actions {
     justify-content: center;
   }
 
-  /* Code card */
+
+  /* =========================
+     HERO CODE CARD
+  ========================= */
+
+  .hero-visual {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+  }
 
   .code-card {
     width: min(100%, 600px);
     margin: 0 auto;
   }
 
-  /* Toolkit */
+
+  /* =========================
+     TOOLKIT
+  ========================= */
 
   .skills-card-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -3815,14 +3831,20 @@ body {
 }
 
 
-/* ---------- MOBILE ---------- */
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 600px) {
 
-  /* Global */
+  /* =========================
+     GLOBAL
+  ========================= */
 
-  .container {
-    width: calc(100% - 28px);
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   section {
@@ -3835,16 +3857,12 @@ body {
      NAVBAR
   ========================= */
 
+  .navbar {
+    padding: 15px 18px;
+  }
+
   nav {
     padding: 15px 0;
-  }
-
-  .nav-inner {
-    gap: 12px;
-  }
-
-  .nav-links {
-    display: none;
   }
 
 
@@ -3859,7 +3877,7 @@ body {
     padding-top: 45px;
   }
 
-  .hero-content {
+  .hero-copy {
     width: 100%;
     text-align: center;
   }
@@ -3869,14 +3887,16 @@ body {
     line-height: 1.05;
   }
 
-  .hero p {
+  .hero-text {
     font-size: 15px;
     line-height: 1.7;
     max-width: 100%;
   }
 
 
-  /* Hero buttons */
+  /* =========================
+     HERO BUTTONS
+  ========================= */
 
   .hero-actions {
     width: 100%;
@@ -3894,20 +3914,43 @@ body {
 
 
   /* =========================
+     HERO VISUAL
+  ========================= */
+
+  .hero-visual {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+
+  /* =========================
      CODE CARD
   ========================= */
 
   .code-card {
     width: 100%;
     max-width: 100%;
+    margin: 0 auto;
     border-radius: 16px;
   }
 
   .code-card pre {
-    font-size: 11px;
-    line-height: 1.65;
-    overflow-x: auto;
+    width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
+
+    font-size: 10px;
+    line-height: 1.65;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    white-space: pre;
+  }
+
+  .code-card code {
+    white-space: pre;
   }
 
   .code-card .code-top {
@@ -3916,7 +3959,40 @@ body {
 
 
   /* =========================
-     TOOLKIT / SKILLS
+     STATS
+  ========================= */
+
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+
+    width: 100%;
+  }
+
+  .stats-strip > div {
+    min-width: 0;
+    padding: 20px 12px;
+    text-align: center;
+  }
+
+  .stats-strip strong {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 24px;
+  }
+
+  .stats-strip span {
+    display: block;
+    font-size: 12px;
+    line-height: 1.45;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+
+  /* =========================
+     TOOLKIT
   ========================= */
 
   .skills-card-grid {
@@ -3925,9 +4001,14 @@ body {
   }
 
   .tool-card {
-    min-height: auto;
+    min-height: 0;
+    height: auto;
+
     padding: 22px;
     border-radius: 22px;
+
+    display: flex;
+    flex-direction: column;
   }
 
   .tool-card h3 {
@@ -3937,6 +4018,46 @@ body {
   .tool-card p {
     font-size: 14px;
     line-height: 1.7;
+
+    margin-bottom: 20px;
+  }
+
+  .tool-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    margin-bottom: 22px;
+  }
+
+  .tool-bottom {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    bottom: auto;
+
+    width: 100%;
+
+    margin-top: auto;
+    padding-top: 16px;
+  }
+
+
+  /* =========================
+     SKILLS MARQUEE
+  ========================= */
+
+  .skills-marquee {
+    width: 100vw;
+
+    margin-left: calc((100% - 100vw) / 2);
+
+    overflow: hidden;
+  }
+
+  .skills-marquee-track {
+    width: max-content;
   }
 
 
@@ -3986,26 +4107,17 @@ body {
     inset: -20px;
   }
 
-
-  /* =========================
-     PREVENT HORIZONTAL SCROLL
-  ========================= */
-
-  html,
-  body {
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
 }
 
 
-/* ---------- SMALL PHONES ---------- */
+/* =========================================================
+   SMALL PHONES
+========================================================= */
 
 @media (max-width: 400px) {
 
-  .container {
-    width: calc(100% - 22px);
+  .navbar {
+    padding: 14px 14px;
   }
 
   .hero {
@@ -4016,17 +4128,39 @@ body {
     font-size: 34px;
   }
 
-  .hero p {
+  .hero-text {
     font-size: 14px;
   }
+
+
+  /* Code card */
 
   .code-card {
     border-radius: 14px;
   }
 
   .code-card pre {
-    font-size: 10px;
+    font-size: 9px;
+    line-height: 1.6;
   }
+
+
+  /* Stats */
+
+  .stats-strip > div {
+    padding: 18px 8px;
+  }
+
+  .stats-strip strong {
+    font-size: 21px;
+  }
+
+  .stats-strip span {
+    font-size: 11px;
+  }
+
+
+  /* Toolkit */
 
   .tool-card {
     padding: 18px;
@@ -4034,6 +4168,10 @@ body {
 
   .tool-card h3 {
     font-size: 18px;
+  }
+
+  .tool-card p {
+    font-size: 13px;
   }
 
 }
