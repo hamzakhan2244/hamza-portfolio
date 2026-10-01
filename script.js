@@ -134,69 +134,123 @@ if (glow) {
 
 
 /* =========================================================
-   HERO CODE CARD — 3D TILT
+   HERO CODE CARD — 3D TILT + CURSOR GLOW
 ========================================================= */
 
-const tiltArea =
-  document.getElementById("tiltCard");
+const tiltArea = document.getElementById("tiltCard");
 
 if (
   tiltArea &&
   window.matchMedia("(pointer:fine)").matches
 ) {
-
-  const codeCard =
-    tiltArea.querySelector(".code-card");
+  const codeCard = tiltArea.querySelector(".code-card");
 
   if (codeCard) {
 
-    tiltArea.addEventListener(
-      "pointermove",
-      (e) => {
+    tiltArea.addEventListener("pointermove", (e) => {
 
-        const rect =
-          tiltArea.getBoundingClientRect();
+      const rect = codeCard.getBoundingClientRect();
 
-        const x =
-          (e.clientX - rect.left) /
-          rect.width -
-          0.5;
+      /* 3D tilt */
 
-        const y =
-          (e.clientY - rect.top) /
-          rect.height -
-          0.5;
+      const x =
+        (e.clientX - rect.left) / rect.width - 0.5;
 
-        const rotateY =
-          x * 7;
+      const y =
+        (e.clientY - rect.top) / rect.height - 0.5;
 
-        const rotateX =
-          y * -7;
-
-        codeCard.style.transform = `
-          rotateY(${rotateY}deg)
-          rotateX(${rotateX}deg)
-        `;
-
-      }
-    );
+      codeCard.style.transform = `
+        rotateY(${x * 7}deg)
+        rotateX(${y * -7}deg)
+      `;
 
 
-    tiltArea.addEventListener(
-      "pointerleave",
-      () => {
+      /* Cursor position */
 
-        codeCard.style.transform =
-          "rotateY(0deg) rotateX(0deg)";
+      codeCard.style.setProperty(
+        "--mouse-x",
+        `${e.clientX - rect.left}px`
+      );
 
-      }
-    );
+      codeCard.style.setProperty(
+        "--mouse-y",
+        `${e.clientY - rect.top}px`
+      );
+
+    });
+
+
+    tiltArea.addEventListener("pointerleave", () => {
+
+      codeCard.style.transform =
+        "rotateY(0deg) rotateX(0deg)";
+
+      codeCard.style.setProperty(
+        "--mouse-x",
+        "-300px"
+      );
+
+      codeCard.style.setProperty(
+        "--mouse-y",
+        "-300px"
+      );
+
+    });
 
   }
-
 }
 
 
+/* =========================================================
+   TOOLKIT CARDS — CURSOR FOLLOWING GLOW
+========================================================= */
+
+const toolkitCards =
+  document.querySelectorAll(".toolkit-card");
+
+if (
+  toolkitCards.length &&
+  window.matchMedia("(pointer:fine)").matches
+) {
+
+  toolkitCards.forEach((card) => {
+
+    card.addEventListener("pointermove", (e) => {
+
+      const rect = card.getBoundingClientRect();
+
+      /* Cursor position */
+
+      card.style.setProperty(
+        "--mouse-x",
+        `${e.clientX - rect.left}px`
+      );
+
+      card.style.setProperty(
+        "--mouse-y",
+        `${e.clientY - rect.top}px`
+      );
+
+    });
+
+
+    card.addEventListener("pointerleave", () => {
+
+      card.style.setProperty(
+        "--mouse-x",
+        "-300px"
+      );
+
+      card.style.setProperty(
+        "--mouse-y",
+        "-300px"
+      );
+
+    });
+
+  });
+
+}
 /* =========================================================
    3D SKILL CARD MOVEMENT
 ========================================================= */
@@ -406,3 +460,498 @@ if (yearElement) {
     new Date().getFullYear();
 
 }
+
+/* =========================================================
+   ANIMATED NETWORK BACKGROUND
+========================================================= */
+
+const networkCanvas =
+  document.getElementById("network-bg");
+
+if (networkCanvas) {
+
+  const ctx =
+    networkCanvas.getContext("2d");
+
+  let width;
+  let height;
+
+  let particles = [];
+
+  const mouse = {
+    x: null,
+    y: null,
+    radius: 140
+  };
+
+
+  /* -----------------------------------------
+     RESIZE CANVAS
+  ----------------------------------------- */
+
+  function resizeNetworkCanvas() {
+
+    width = networkCanvas.width =
+      window.innerWidth * window.devicePixelRatio;
+
+    height = networkCanvas.height =
+      window.innerHeight * window.devicePixelRatio;
+
+    networkCanvas.style.width =
+      `${window.innerWidth}px`;
+
+    networkCanvas.style.height =
+      `${window.innerHeight}px`;
+
+    ctx.setTransform(
+      window.devicePixelRatio,
+      0,
+      0,
+      window.devicePixelRatio,
+      0,
+      0
+    );
+
+    createParticles();
+  }
+
+
+  /* -----------------------------------------
+     CREATE PARTICLES
+  ----------------------------------------- */
+
+  function createParticles() {
+
+    particles = [];
+
+    const isMobile =
+      window.innerWidth < 768;
+
+    const count =
+      isMobile ? 38 : 75;
+
+    for (let i = 0; i < count; i++) {
+
+      particles.push({
+
+        x: Math.random() * window.innerWidth,
+
+        y: Math.random() * window.innerHeight,
+
+        size:
+          Math.random() * 1.5 + 0.5,
+
+        speedX:
+          (Math.random() - 0.5) * 0.25,
+
+        speedY:
+          (Math.random() - 0.5) * 0.25,
+
+        opacity:
+          Math.random() * 0.55 + 0.2,
+
+        color:
+          Math.random() > 0.5
+            ? "139,124,255"
+            : "82,217,255"
+      });
+    }
+  }
+
+
+  /* -----------------------------------------
+     MOUSE POSITION
+  ----------------------------------------- */
+
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+
+    },
+    { passive: true }
+  );
+
+
+  window.addEventListener(
+    "pointerleave",
+    () => {
+
+      mouse.x = null;
+      mouse.y = null;
+
+    }
+  );
+
+
+  /* -----------------------------------------
+     DRAW PARTICLES
+  ----------------------------------------- */
+
+  function drawParticles() {
+
+    particles.forEach((particle) => {
+
+      ctx.beginPath();
+
+      ctx.arc(
+        particle.x,
+        particle.y,
+        particle.size,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fillStyle =
+        `rgba(${particle.color}, ${particle.opacity})`;
+
+      ctx.fill();
+
+
+      /* Small glow around some particles */
+
+      if (particle.size > 1.2) {
+
+        ctx.beginPath();
+
+        ctx.arc(
+          particle.x,
+          particle.y,
+          particle.size * 4,
+          0,
+          Math.PI * 2
+        );
+
+        const glow =
+          ctx.createRadialGradient(
+            particle.x,
+            particle.y,
+            0,
+            particle.x,
+            particle.y,
+            particle.size * 4
+          );
+
+        glow.addColorStop(
+          0,
+          `rgba(${particle.color}, 0.16)`
+        );
+
+        glow.addColorStop(
+          1,
+          `rgba(${particle.color}, 0)`
+        );
+
+        ctx.fillStyle = glow;
+
+        ctx.fill();
+      }
+
+    });
+  }
+
+
+  /* -----------------------------------------
+     CONNECT PARTICLES
+  ----------------------------------------- */
+
+  function connectParticles() {
+
+    const maxDistance = 135;
+
+    for (let i = 0; i < particles.length; i++) {
+
+      for (
+        let j = i + 1;
+        j < particles.length;
+        j++
+      ) {
+
+        const p1 = particles[i];
+        const p2 = particles[j];
+
+        const dx =
+          p1.x - p2.x;
+
+        const dy =
+          p1.y - p2.y;
+
+        const distance =
+          Math.sqrt(dx * dx + dy * dy);
+
+
+        if (distance < maxDistance) {
+
+          const opacity =
+            (1 - distance / maxDistance) * 0.22;
+
+
+          ctx.beginPath();
+
+          ctx.moveTo(
+            p1.x,
+            p1.y
+          );
+
+          ctx.lineTo(
+            p2.x,
+            p2.y
+          );
+
+          ctx.strokeStyle =
+            `rgba(139, 124, 255, ${opacity})`;
+
+          ctx.lineWidth = 0.6;
+
+          ctx.stroke();
+
+        }
+
+      }
+    }
+  }
+
+
+  /* -----------------------------------------
+     MOUSE CONNECTIONS
+  ----------------------------------------- */
+
+  function connectMouse() {
+
+    if (
+      mouse.x === null ||
+      mouse.y === null
+    ) {
+      return;
+    }
+
+
+    particles.forEach((particle) => {
+
+      const dx =
+        particle.x - mouse.x;
+
+      const dy =
+        particle.y - mouse.y;
+
+      const distance =
+        Math.sqrt(dx * dx + dy * dy);
+
+
+      if (distance < mouse.radius) {
+
+        const opacity =
+          (1 - distance / mouse.radius) * 0.28;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          particle.x,
+          particle.y
+        );
+
+        ctx.lineTo(
+          mouse.x,
+          mouse.y
+        );
+
+        ctx.strokeStyle =
+          `rgba(82, 217, 255, ${opacity})`;
+
+        ctx.lineWidth = 0.7;
+
+        ctx.stroke();
+
+      }
+
+    });
+  }
+
+
+  /* -----------------------------------------
+     UPDATE PARTICLES
+  ----------------------------------------- */
+
+  function updateParticles() {
+
+    particles.forEach((particle) => {
+
+      particle.x += particle.speedX;
+      particle.y += particle.speedY;
+
+
+      /* Bounce from screen edges */
+
+      if (
+        particle.x < 0 ||
+        particle.x > window.innerWidth
+      ) {
+        particle.speedX *= -1;
+      }
+
+
+      if (
+        particle.y < 0 ||
+        particle.y > window.innerHeight
+      ) {
+        particle.speedY *= -1;
+      }
+
+    });
+  }
+
+
+  /* -----------------------------------------
+     ANIMATION LOOP
+  ----------------------------------------- */
+
+  function animateNetwork() {
+
+    ctx.clearRect(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight
+    );
+
+
+    /* Very subtle purple atmospheric glow */
+
+    const glow1 =
+      ctx.createRadialGradient(
+        window.innerWidth * 0.2,
+        window.innerHeight * 0.25,
+        0,
+        window.innerWidth * 0.2,
+        window.innerHeight * 0.25,
+        350
+      );
+
+    glow1.addColorStop(
+      0,
+      "rgba(139,124,255,0.045)"
+    );
+
+    glow1.addColorStop(
+      1,
+      "rgba(139,124,255,0)"
+    );
+
+    ctx.fillStyle = glow1;
+
+    ctx.fillRect(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight
+    );
+
+
+    /* Cyan atmospheric glow */
+
+    const glow2 =
+      ctx.createRadialGradient(
+        window.innerWidth * 0.8,
+        window.innerHeight * 0.65,
+        0,
+        window.innerWidth * 0.8,
+        window.innerHeight * 0.65,
+        400
+      );
+
+    glow2.addColorStop(
+      0,
+      "rgba(82,217,255,0.035)"
+    );
+
+    glow2.addColorStop(
+      1,
+      "rgba(82,217,255,0)"
+    );
+
+    ctx.fillStyle = glow2;
+
+    ctx.fillRect(
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight
+    );
+
+
+    updateParticles();
+
+    connectParticles();
+
+    connectMouse();
+
+    drawParticles();
+
+    requestAnimationFrame(
+      animateNetwork
+    );
+  }
+
+
+  /* -----------------------------------------
+     START
+  ----------------------------------------- */
+
+  resizeNetworkCanvas();
+
+  animateNetwork();
+
+
+  window.addEventListener(
+    "resize",
+    resizeNetworkCanvas
+  );
+
+}
+
+/* =========================================================
+   ACTIVE NAV LINK ON SCROLL
+========================================================= */
+
+const sections = document.querySelectorAll(
+  "main section[id]"
+);
+
+const navLinks = document.querySelectorAll(
+  "#navMenu a[href^='#']"
+);
+
+function updateActiveNav() {
+  let currentSection = "";
+
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+
+    if (
+      window.scrollY >= sectionTop - 150 &&
+      window.scrollY < sectionTop + sectionHeight - 150
+    ) {
+      currentSection = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach((link) => {
+    link.classList.remove("active");
+
+    if (
+      link.getAttribute("href") === `#${currentSection}`
+    ) {
+      link.classList.add("active");
+    }
+  });
+}
+
+window.addEventListener("scroll", updateActiveNav, {
+  passive: true
+});
+
+window.addEventListener("load", updateActiveNav);
