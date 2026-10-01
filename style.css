@@ -3752,7 +3752,7 @@ body {
 }
 
 /* =========================================================
-   FULL MOBILE RESPONSIVE — FIXED
+   FULL MOBILE RESPONSIVE — FINAL FIX
 ========================================================= */
 
 
@@ -3804,7 +3804,7 @@ body {
 
 
   /* =========================
-     HERO CODE CARD
+     HERO VISUAL
   ========================= */
 
   .hero-visual {
@@ -3812,6 +3812,11 @@ body {
     max-width: 700px;
     margin: 0 auto;
   }
+
+
+  /* =========================
+     CODE CARD
+  ========================= */
 
   .code-card {
     width: min(100%, 600px);
@@ -3891,6 +3896,8 @@ body {
     font-size: 15px;
     line-height: 1.7;
     max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
 
@@ -3932,13 +3939,21 @@ body {
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
+
     border-radius: 16px;
+
+    text-align: left !important;
   }
 
   .code-card pre {
+    display: block;
+
     width: 100%;
     max-width: 100%;
+
     box-sizing: border-box;
+
+    margin: 0;
 
     font-size: 10px;
     line-height: 1.65;
@@ -3947,10 +3962,19 @@ body {
     overflow-y: hidden;
 
     white-space: pre;
+
+    text-align: left !important;
   }
 
   .code-card code {
+    display: block;
+
+    width: max-content;
+    min-width: 100%;
+
     white-space: pre;
+
+    text-align: left !important;
   }
 
   .code-card .code-top {
@@ -3964,7 +3988,7 @@ body {
 
   .stats-strip {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0;
 
     width: 100%;
@@ -3972,20 +3996,26 @@ body {
 
   .stats-strip > div {
     min-width: 0;
+
     padding: 20px 12px;
+
     text-align: center;
   }
 
   .stats-strip strong {
     display: block;
+
     margin-bottom: 7px;
+
     font-size: 24px;
   }
 
   .stats-strip span {
     display: block;
+
     font-size: 12px;
     line-height: 1.45;
+
     white-space: normal;
     overflow-wrap: break-word;
   }
@@ -4025,6 +4055,7 @@ body {
   .tool-tags {
     display: flex;
     flex-wrap: wrap;
+
     gap: 8px;
 
     margin-bottom: 22px;
@@ -4116,9 +4147,18 @@ body {
 
 @media (max-width: 400px) {
 
+  /* =========================
+     NAVBAR
+  ========================= */
+
   .navbar {
     padding: 14px 14px;
   }
+
+
+  /* =========================
+     HERO
+  ========================= */
 
   .hero {
     padding-top: 35px;
@@ -4133,19 +4173,31 @@ body {
   }
 
 
-  /* Code card */
+  /* =========================
+     CODE CARD
+  ========================= */
 
   .code-card {
     border-radius: 14px;
+
+    text-align: left !important;
   }
 
   .code-card pre {
     font-size: 9px;
     line-height: 1.6;
+
+    text-align: left !important;
+  }
+
+  .code-card code {
+    text-align: left !important;
   }
 
 
-  /* Stats */
+  /* =========================
+     STATS
+  ========================= */
 
   .stats-strip > div {
     padding: 18px 8px;
@@ -4160,7 +4212,9 @@ body {
   }
 
 
-  /* Toolkit */
+  /* =========================
+     TOOLKIT
+  ========================= */
 
   .tool-card {
     padding: 18px;
@@ -4172,6 +4226,14 @@ body {
 
   .tool-card p {
     font-size: 13px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .stats-strip {
+    margin-top: -270px;
   }
 
 }
